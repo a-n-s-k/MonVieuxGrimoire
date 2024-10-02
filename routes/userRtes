@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const userCtrl = require('../controllers/userCtrls');
+const { signup } = require('../controllers/userCtrlSignup');
+const { login } = require('../controllers/userCtrlLogin');
 
 
-//  S'inscrire
-router.post('/signup', userCtrl.signup);
+//  S'inscrire pour publier modifier ou supprimer des livres
+router.post('/signup', signup);
 
-//  Se connecter
-router.post('/login', userCtrl.login);
+//  Se connecter pour publier modifier ou supprimer des livres
+router.post('/login', login);
 
 module.exports = router;

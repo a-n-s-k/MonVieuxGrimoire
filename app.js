@@ -2,10 +2,22 @@ require('dotenv').config({path: './.env'});
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
+
 
 const app = express();
 
 
+// HPP puts array parameters in req.query and/or req.body aside and just selects the last parameter value.
+app.use(hpp());
+
+// To remove data by default, $ and . characters are removed completely from user-supplied input in the following places:
+// - req.body
+// - req.params
+// - req.headers
+// - req.query
+app.use(mongoSanitize());
 
 const userRoutes = require('./routes/userRtes');
 const bookRoutes = require('./routes/bookRtes');

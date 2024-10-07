@@ -13,8 +13,6 @@ const MIME_TYPES = {
    "image/webp": "webp",
 };
 
-//const storage.filename.extension = MIME_TYPES[file.mimetype];
-
 //Configuration de multer pour le stockage des fichiers
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -24,21 +22,11 @@ const storage = multer.diskStorage({
   filename: (req, file, callback) => {
     //On définit comment les noms de fichier sont générées.Définit repertoire de destination + nom fichier
     const name = file.originalname.split(".")[0]; //On extrait le nom du fichier sans son extension
-    console.log(name);
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, name +'.' + extension);
+    callback(null, name +'-'+ Date.now() + '.' + extension);
     //callback(null, name + ".webp");
   },
 });
-
-//const { filename } = storage;
-
-//const { name, extension } = filename;
-
-
-//console.log(storage);
-//console.log(extension);
-
 
 //Création d'un objet multer
 const upload = multer({
@@ -74,88 +62,22 @@ module.exports = (req, res, next) => {
 
       try {
         const originalFileName = req.file ? req.file.path : null;
-        console.log(originalFileName);
 
-        const uncompressedFileName = req.file.path.split(".")[0] + "-original."+ req.file.mimetype.split("/")[1];
-
-        console.log(uncompressedFileName);
-
-        fs.copyFile(
-          `${originalFileName}`,
-           `${uncompressedFileName}`,
-          (err) => {
-            if (err) {
-              console.log("Opération de copie échouée: ", err);
-            }
-            else {
-            console.log(`Fichier ${originalFileName} copié vers ${uncompressedFileName}`,
-              //fs.readFileSync(`${uncompressedFileName}`, "utf8")
-              );
-            }
-          }
-        );
-
-
-        //if (originalFileName) {
+        if (originalFileName) {
           // si la requete contient un fichier et que tout se passe bien , on utilise sharp pour redimensionner et convertir l'image en format webp.
-          //const compressedFileName = req.file.path.split(".")[0] + "-compressed.webp";
-         
-
-
-
-
-
+          let compressedFileName =
+            req.file.path.split(".")[0] + "compressed.webp";
             //req.file.path.split(".")[0];
-            /* fs.copyFile(`${originalFileName}`, `${uncompressedFileName}`, error => {
-              console.log('La source media was not copied to original media')
-             }); */
-
-/*           await sharp(originalFileName)
+          await sharp(originalFileName)
             .resize(800)
             .webp({ quality: 80 })
             .toFile(`${compressedFileName}`);
-            console.log(originalFileName); */
-
-  const imageLivre = {
-
-
-
             if (originalFileName) {
-          //fs.unlink(`${originalFileName}`); // on supprime l'image d'origine
-          //fs.rename(`${compressedFileName}`, `${originalFileName}`); // on renomme l'image compressée avec le nom de l'image d'origine
-
-
-
-          // on supprime l'image d'origine
-          /* await fs.unlink(
-            `${originalFileName}`,
-                (err) => { err? console.log(err) : console.log(`Fichier supprimé: ${originalFileName}`);}
-          ); */
-
-          // on renomme l'image compressée avec le nom de l'image d'origine
-          const compressedFileName = req.file.path.split(".")[0] + ".webp";
-          sharp(originalFileName)
-            .resize(800)
-            .webp({ quality: 80 })
-            .toFile(`${compressedFileName}`)
-         {
-              fs.rename(
-                `${originalFileName}`,
-                `${compressedFileName}`,
-                () => {
-                      console.log(`Fichier ${originalFileName} renommé en ${compressedFileName}`);
-              });
-            };
-/* 
-          fs.rename(
-            `${originalFileName}`,
-            `${compressedFileName}`,
-            () => {
-                  console.log(`Fichier ${originalFileName} renommé en ${compressedFileName}`);
-          }); */
+          fs.unlinkSync(originalFileName); // on supprime l'image d'origine
+          fs.renameSync(`${compressedFileName}`, originalFileName); // on renomme l'image compressée avec le nom de l'image d'origine
           }
-        //}
-      }
+        }
+
         next(); // on passe au middleware suivant
       } catch (error) {
         console.log("ERROR MULTER -- ", error);

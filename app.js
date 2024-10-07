@@ -8,7 +8,6 @@ const hpp = require('hpp');
 
 const app = express();
 
-
 // HPP puts array parameters in req.query and/or req.body aside and just selects the last parameter value.
 app.use(hpp());
 

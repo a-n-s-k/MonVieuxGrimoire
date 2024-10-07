@@ -7,7 +7,7 @@ const { updateOneBook } = require('../controllers/bookCtrlUpdate');
 const { deleteOneBook } = require('../controllers/bookCtrlDelete');
 
 const auth = require('../middlewares/authentification');
-const  { uploadImage }  = require('../middlewares/multer-configuration');
+const  multerMW  = require('../middlewares/multer-configuration');
 //const  { uploadImage, compressImage }  = require('../middlewares/multer-configuration');
 
 // Afficher tous les livres
@@ -20,13 +20,13 @@ router.get('/bestrating', getBestRatedBooks);
 router.get('/:id', getOneBook);
 
 // Poster un nouveau livre
-router.post('/', auth, uploadImage, postOneBook);
+router.post('/', auth, multerMW, postOneBook);
 
 // Noter un livre
 router.post('/:id/rating', auth, postOneBookRate)
 
 // Modifier un livre
-router.put('/:id', auth, uploadImage, updateOneBook);
+router.put('/:id', auth, multerMW, updateOneBook);
 
 // Supprimer un livre
 router.delete('/:id', auth, deleteOneBook);

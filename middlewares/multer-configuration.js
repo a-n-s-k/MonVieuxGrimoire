@@ -1,6 +1,9 @@
 const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("node:fs");
+const { v4: uuidv4 } = require('uuid');
+
+
 
 // Associe les types MIM des images à leurs extensions correspondantes
 // Utilisés au début mais non conservés pour laisser apparaitre l'extension webp
@@ -39,8 +42,6 @@ const storage = multer.diskStorage({
     //callback(null, imageName );
   },
 });
-
-console.log(extImage);
 
 
 //Création d'un objet multer

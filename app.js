@@ -4,9 +4,14 @@ const mongoose = require('mongoose');
 const path = require('path');
 const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
+const  limiter  = require('./middlewares/express-rate-limit');
 
 
 const app = express();
+
+// Basic rate-limiting middleware for Express. 
+// Use to limit repeated requests to public APIs and/or endpoints such as password reset.
+app.use(limiter)
 
 // HPP puts array parameters in req.query and/or req.body aside and just selects the last parameter value.
 app.use(hpp());

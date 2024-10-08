@@ -4,14 +4,14 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 //const session = require('express-session')
 
-const cookieSession = require('cookie-session')
+//const cookieSession = require('cookie-session')
 
 const app = require('./app');
 
 
 
 
-const expiryDate = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+/* const expiryDate = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
@@ -21,7 +21,7 @@ app.use(cookieSession({
     domain: 'localhost',
     expires: expiryDate
   }
-}))
+})) */
 
 
 

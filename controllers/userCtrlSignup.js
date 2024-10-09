@@ -1,5 +1,5 @@
 const bcryptCo = require('bcrypt');
-const User = require('../models/User');
+const User = require('./../models/User');
 
 exports.signup = (req, res, next) => {
     bcryptCo.hash(req.body.password, 10)

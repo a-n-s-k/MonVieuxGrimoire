@@ -1,4 +1,4 @@
-const Book = require('../models/Book');
+const Book = require('./../models/Book');
 
 exports.postOneBook = (req, res, next) => {
   const bookReqBody = JSON.parse(req.body.book);

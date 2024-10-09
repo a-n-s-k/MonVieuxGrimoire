@@ -3,9 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const mongoSanitize = require('express-mongo-sanitize');
-const hpp = require('hpp');
 const  limiter  = require('./middlewares/express-rate-limit');
-
 
 const app = express();
 
@@ -13,8 +11,6 @@ const app = express();
 // Use to limit repeated requests to public APIs and/or endpoints such as password reset.
 app.use(limiter)
 
-// HPP puts array parameters in req.query and/or req.body aside and just selects the last parameter value.
-app.use(hpp());
 
 // To remove data by default, $ and . characters are removed completely from user-supplied input in the following places:
 // - req.body

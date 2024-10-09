@@ -1,4 +1,4 @@
-const Book = require('../models/Book');
+const Book = require('./../models/Book');
 
 exports.updateOneBook = (req, res, next) => {
     if (req.file) {

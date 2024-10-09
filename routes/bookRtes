@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const { postOneBook, postOneBookRate } = require('../controllers/bookCtrlCreate');
-const { getAllBooks, getOneBook, getBestRatedBooks } = require('../controllers/bookCtrlRead');
-const { updateOneBook } = require('../controllers/bookCtrlUpdate');
-const { deleteOneBook } = require('../controllers/bookCtrlDelete');
+const { postOneBook, postOneBookRate } = require('./../controllers/bookCtrlCreate');
+const { getAllBooks, getOneBook, getBestRatedBooks } = require('./../controllers/bookCtrlRead');
+const { updateOneBook } = require('./../controllers/bookCtrlUpdate');
+const { deleteOneBook } = require('./../controllers/bookCtrlDelete');
 
-const auth = require('../middlewares/authentification');
-const  multer  = require('../middlewares/multer-configuration');
-const  limit  = require('../middlewares/express-rate-limit');
+const auth = require('./../middlewares/authentification');
+const  multer  = require('./../middlewares/multer-configuration');
+
 
 
 // Afficher tous les livres
@@ -21,13 +21,13 @@ router.get('/bestrating', getBestRatedBooks);
 router.get('/:id', getOneBook);
 
 // Poster un nouveau livre
-router.post('/', auth, multer, limit, postOneBook);
+router.post('/', auth, multer, postOneBook);
 
 // Noter un livre
 router.post('/:id/rating', auth, postOneBookRate)
 
 // Modifier un livre
-router.put('/:id', auth, multer, limit, updateOneBook);
+router.put('/:id', auth, multer, updateOneBook);
 
 // Supprimer un livre
 router.delete('/:id', auth, deleteOneBook);

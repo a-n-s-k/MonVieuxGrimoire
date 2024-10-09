@@ -1,8 +1,7 @@
 require('dotenv').config({path: './.env'});
 const bcryptCo = require('bcrypt');
 const jwtCo = require('jsonwebtoken');
-const User = require('../models/User');
-
+const User = require('./../models/User');
 
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })

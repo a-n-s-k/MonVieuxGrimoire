@@ -2,42 +2,12 @@ require('dotenv').config({path: '.env'});
 const http = require('http');
 const helmet = require('helmet');
 const hpp = require('hpp');
-//const session = require('express-session')
-
-//const cookieSession = require('cookie-session')
 
 const app = require('./app');
 
-
-
-
-/* const expiryDate = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  cookie: {
-    secure: true,
-    httpOnly: true,
-    domain: 'localhost',
-    expires: expiryDate
-  }
-})) */
-
-
-
-
-
-
-
-/* app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-  secret: 'motS De pasSe sessiOns',
-  name: 'sessionId'
-})) */
-
-
-
+// HPP puts array parameters in req.query and/or req.body aside and just selects the last parameter value.
 app.use(hpp());
+
 app.use(helmet());
 
 const normalizePort = val => {

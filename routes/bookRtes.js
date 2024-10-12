@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { postOneBook, postOneBookRate } = require('./../controllers/bookCtrlCreate');
-const { getAllBooks, getOneBook, getBestRatedBooks } = require('./../controllers/bookCtrlRead');
-const { updateOneBook } = require('./../controllers/bookCtrlUpdate');
-const { deleteOneBook } = require('./../controllers/bookCtrlDelete');
+const { postOneBook, postOneBookRate, getAllBooks,
+    getOneBook, getBestRatedBooks,updateOneBook,
+    deleteOneBook } = require('./../controllers/bookCtrl');
 
 const auth = require('./../middlewares/authentification');
 const  multer  = require('./../middlewares/multer-configuration');
-
-
 
 // Afficher tous les livres
 router.get('/', getAllBooks);
@@ -31,6 +28,5 @@ router.put('/:id', auth, multer, updateOneBook);
 
 // Supprimer un livre
 router.delete('/:id', auth, deleteOneBook);
-
 
 module.exports = router;

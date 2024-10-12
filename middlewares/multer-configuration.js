@@ -8,14 +8,10 @@ const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "images"); //Repertoire de destination des fichiers
   },
-
   filename: (req, file, callback) => {
     // On définit comment les noms de fichier sont générées
-    // On change le nom du fichier
-    // const name = uuidv4()+".webp"; 
+    // On change le nom et l'extension du fichier
     const name = uuidv4()+".webp";
-    // On change l'extension du fichier
-    //callback(null, name + ".webp");
     callback(null, name);
   },
 });
@@ -46,42 +42,21 @@ module.exports = (req, res, next) => {
         return;
       }
       try {
-        
-        // On recupère ici l'extension de l'image de départ
-        //const ext = req.file.split(".")[1];
-        // On recupère ici l'image de départ et son chemin
         const chemin = "images/\/";
         let originalFileName = req.file ? chemin+req.file.filename : null;
-        console.log(originalFileName);
         let compressedFileName = req.file ? originalFileName.split(".")[0]+"-compressed.webp" : null;
-        console.log(compressedFileName);
-        console.log(req.file);
-
         if (originalFileName) {
-          // si la requete contient un fichier et que tout se passe bien
-          // on utilise sharp pour redimensionner et convertir l'image en format webp.
           await sharp(originalFileName)
-            .resize({
-              width: 824,
-              height: 1040,
-              fit: sharp.fit.cover,
-              position: sharp.strategy.entropy
-            })
-            .webp({ quality: 80 })
-            //.toFile(compressedFileName);
-
-            .toFile(`${compressedFileName}`);
-            console.log(compressedFileName);
-            //fs.rmSync(`${originalFileName}`);
-            console.log(originalFileName);
-            fs.renameSync(`${compressedFileName}`, `${originalFileName}`);
-            console.log(originalFileName);
+          .resize({ width: 824, height: 1040, fit: sharp.fit.cover, position: sharp.strategy.entropy })
+          .webp({ quality: 80 })
+          .toFile(`${compressedFileName}`);
+          fs.renameSync(`${compressedFileName}`, `${originalFileName}`);
         }
         next();
-      } catch (error) {
-        console.log("Erreur du middleware multer", error);
-        next(error);
-      }
+    } catch (error) {
+      console.log("Erreur du middleware multer", error);
+      next(error);
+    }
     });
   });
 };

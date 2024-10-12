@@ -12,7 +12,8 @@ const storage = multer.diskStorage({
   filename: (req, file, callback) => {
     // On définit comment les noms de fichier sont générées
     // On change le nom du fichier
-    const name = uuidv4()+".webp"; 
+    // const name = uuidv4()+".webp"; 
+    const name = uuidv4()+".webp";
     // On change l'extension du fichier
     //callback(null, name + ".webp");
     callback(null, name);
@@ -45,11 +46,17 @@ module.exports = (req, res, next) => {
         return;
       }
       try {
-        let compressedFileName = req.file.path.split(".")[0] + "-optim.webp";
+        
         // On recupère ici l'extension de l'image de départ
-        const ext = req.file.path.split(".")[1];
+        //const ext = req.file.split(".")[1];
         // On recupère ici l'image de départ et son chemin
-        let originalFileName = req.file ? req.file.path : null;
+        const chemin = "images/\/";
+        let originalFileName = req.file ? chemin+req.file.filename : null;
+        console.log(originalFileName);
+        let compressedFileName = req.file ? originalFileName.split(".")[0]+"-compressed.webp" : null;
+        console.log(compressedFileName);
+        console.log(req.file);
+
         if (originalFileName) {
           // si la requete contient un fichier et que tout se passe bien
           // on utilise sharp pour redimensionner et convertir l'image en format webp.
@@ -61,9 +68,14 @@ module.exports = (req, res, next) => {
               position: sharp.strategy.entropy
             })
             .webp({ quality: 80 })
+            //.toFile(compressedFileName);
+
             .toFile(`${compressedFileName}`);
-            fs.rmSync(`${originalFileName}`, {recursive: true, force: true});
+            console.log(compressedFileName);
+            //fs.rmSync(`${originalFileName}`);
+            console.log(originalFileName);
             fs.renameSync(`${compressedFileName}`, `${originalFileName}`);
+            console.log(originalFileName);
         }
         next();
       } catch (error) {

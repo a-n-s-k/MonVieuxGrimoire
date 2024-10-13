@@ -1,7 +1,7 @@
 require('dotenv').config({path: './.env'});
 const bcryptCo = require('bcrypt');
 const jwtCo = require('jsonwebtoken');
-const User = require('./../models/User');
+const User = require('../models/user-model');
 
 // LOGIN: Connexion à son compte
 exports.login = (req, res, next) => {

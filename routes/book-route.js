@@ -3,10 +3,10 @@ const router = express.Router();
 
 const { postOneBook, postOneBookRate, getAllBooks,
     getOneBook, getBestRatedBooks,updateOneBook,
-    deleteOneBook } = require('./../controllers/bookCtrl');
+    deleteOneBook } = require('../controllers/book-controls');
 
-const auth = require('./../middlewares/authentification');
-const  multer  = require('./../middlewares/multer-configuration');
+const auth = require('../utils/authentification');
+const  multer  = require('../utils/multer-sharp');
 
 // Afficher tous les livres
 router.get('/', getAllBooks);

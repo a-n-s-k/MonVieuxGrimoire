@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const mongoSanitize = require('express-mongo-sanitize');
-const  limiter  = require('./middlewares/express-rate-limit');
+const  limiter  = require('./utils/express-rate-limit');
 
 const app = express();
 
@@ -19,8 +19,8 @@ app.use(limiter)
 // - req.query
 app.use(mongoSanitize());
 
-const userRoutes = require('./routes/userRtes');
-const bookRoutes = require('./routes/bookRtes');
+const userRoutes = require('./routes/user-route');
+const bookRoutes = require('./routes/book-route');
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     .then(() => console.log('La connexion à MongoDB réussie !'))

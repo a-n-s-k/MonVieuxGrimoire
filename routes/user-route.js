@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { signup, login } = require('./../controllers/userCtrl');
+const { signup, login } = require('../controllers/user-controls');
 
 //  S'inscrire pour publier modifier ou supprimer des livres
 router.post('/signup', signup);

@@ -1,4 +1,4 @@
-const Book = require('../models/book-model');
+const Book = require('../models/book-models');
 const fs = require("node:fs");
 
 // CREATE: Creation d'une fiche livre

@@ -19,8 +19,8 @@ app.use(limiter)
 // - req.query
 app.use(mongoSanitize());
 
-const userRoutes = require('./routes/user-route');
-const bookRoutes = require('./routes/book-route');
+const userRoutes = require('./routes/user-routes');
+const bookRoutes = require('./routes/book-routes');
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     .then(() => console.log('La connexion à MongoDB réussie !'))

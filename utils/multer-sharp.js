@@ -47,7 +47,7 @@ module.exports = (req, res, next) => {
         let compressedFileName = req.file ? originalFileName.split(".")[0]+"-compressed.webp" : null;
         if (originalFileName) {
           await sharp(originalFileName)
-          .resize({ width: 824, height: 1040, fit: sharp.fit.cover, position: sharp.strategy.entropy })
+          .resize({ height: 728 })
           .webp({ quality: 80 })
           .toFile(`${compressedFileName}`);
           fs.renameSync(`${compressedFileName}`, `${originalFileName}`);

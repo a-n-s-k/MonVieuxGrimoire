@@ -2,7 +2,6 @@ require('dotenv').config({path: '.env'});
 const http = require('http');
 const helmet = require('helmet');
 const hpp = require('hpp');
-const logger = require('./utils/logger');
 
 const app = require('./app');
 
@@ -67,9 +66,8 @@ app.use((err, req, res, next) => {
   res.status(500).send("Quelque chose s'est cassé.")
 })
 
-
 server.listen(port, () => {
-  logger.info(`Serveur exécuté sur le port: ${port}`)
+  console.log(`Serveur exécuté sur le port: ${port}`)
 })
 
 
